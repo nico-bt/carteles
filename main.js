@@ -18,22 +18,40 @@ document.body.appendChild(renderer.domElement)
 const skyTexture = new THREE.TextureLoader().load("/sky.jpg")
 scene.background = skyTexture
 
-// Light
+// Lights
 //***********************************************************************
 const light = new THREE.AmbientLight(0x404040) // soft white light
 scene.add(light)
 
 // // White directional light.
-const directionalLight = new THREE.DirectionalLight(0xffffff, 0.85)
+const directionalLight = new THREE.DirectionalLight(0xfffce5, 0.75)
 // directionalLight.position.x = 1
-directionalLight.position.y = 10
+directionalLight.position.y = 50
 directionalLight.position.z = 10
 scene.add(directionalLight)
 
+const directionalLight2 = new THREE.DirectionalLight(0xfffce5, 0.75)
+directionalLight.position.x = 30
+directionalLight2.position.y = 50
+directionalLight2.position.z = 100
+scene.add(directionalLight2)
+
 // PointLight
-const pointLight = new THREE.PointLight(0xffffff)
-pointLight.position.set(-20, 20, -20)
+const pointLight = new THREE.PointLight(0xffffff, 0.3)
+pointLight.position.set(-60, 30, 20)
 scene.add(pointLight)
+
+const pointLight2 = new THREE.PointLight(0xffffff, 0.5, 100)
+pointLight2.position.set(14, 7, 88)
+scene.add(pointLight2)
+
+const pointLight3 = new THREE.PointLight(0xffffff, 0.5, 100)
+pointLight3.position.set(20, 20, 48)
+scene.add(pointLight3)
+
+const pointLight4 = new THREE.PointLight(0xfff7c4, 0.5, 100)
+pointLight4.position.set(20, 20, 10)
+scene.add(pointLight4)
 
 // Floor
 //***********************************************************************
@@ -104,7 +122,7 @@ loader.load(
 loader.load(
   "scene.gltf",
   function (gltf) {
-    gltf.scene.position.set(10, -1, 62)
+    gltf.scene.position.set(-10, -1, 85)
     gltf.scene.scale.set(1, 1, 1)
     scene.add(gltf.scene)
   },
@@ -128,13 +146,10 @@ loader.load(
 
 // Carteles
 //------------------------------------------------
-const payasosTexture = new THREE.TextureLoader().load("escuela-payasos.jpg")
-
 const cartel = await loader.loadAsync("/advertisement_billboard/scene.gltf")
 
 cartel.scene.position.set(12, -10, 80)
 cartel.scene.scale.set(2, 2, 2)
-console.log(cartel.parser.textureLoader)
 scene.add(cartel.scene)
 
 const cartel2 = await loader.loadAsync("/advertisement_billboard/scene.gltf")
@@ -144,15 +159,64 @@ scene.add(cartel2.scene)
 
 const cartel3 = await loader.loadAsync("/advertisement_billboard/scene.gltf")
 cartel3.scene.scale.set(2.25, 2.25, 2.25)
-cartel3.scene.position.set(12, -10, -2)
+cartel3.scene.position.set(12, -11, -2)
 scene.add(cartel3.scene)
 
-// Ball character
+// Imagenes para Carteles
+//------------------------------------------------
+var loaderImg = new THREE.TextureLoader()
+
+// img1
+//--------------------------------------------
+let materialImg = new THREE.MeshBasicMaterial({
+  map: loaderImg.load("escuela-payasos.jpg"),
+})
+let geometryImg = new THREE.PlaneGeometry(12.5, 5)
+
+// combine our image geometry and material into a mesh
+let meshImg = new THREE.Mesh(geometryImg, materialImg)
+
+meshImg.position.set(11.4, 7.8, 38.4)
+
+// add the image to the scene
+scene.add(meshImg)
+
+// img2
+//--------------------------------------------
+let materialImg2 = new THREE.MeshBasicMaterial({
+  map: loaderImg.load("muffins.jpg"),
+})
+let geometryImg2 = new THREE.PlaneGeometry(12.5, 5)
+
+// combine our image geometry and material into a mesh
+let meshImg2 = new THREE.Mesh(geometryImg2, materialImg2)
+
+meshImg2.position.set(11.5, 7.8, 80.4)
+
+// add the image to the scene
+scene.add(meshImg2)
+
+// img3
+//--------------------------------------------
+let materialImg3 = new THREE.MeshBasicMaterial({
+  map: loaderImg.load("nico.jpg"),
+})
+let geometryImg3 = new THREE.PlaneGeometry(13.6, 6.8)
+
+// combine our image geometry and material into a mesh
+let meshImg3 = new THREE.Mesh(geometryImg3, materialImg3)
+
+meshImg3.position.set(11.4, 9, -1.5)
+
+// add the image to the scene
+scene.add(meshImg3)
+
+// Car character
 //***********************************************************************
 const car = await loader.loadAsync("/car/scene.gltf")
 
 car.scene.scale.set(0.3, 0.3, 0.3)
-car.scene.position.set(2, -0.25, 93.7)
+car.scene.position.set(2.5, -0.25, 93.7)
 camera.position.set(-8, 10, -18)
 car.scene.rotation.y = Math.PI
 scene.add(car.scene)
@@ -180,11 +244,11 @@ function onKeyUp(event) {
 
 // En vez de usar eventlistener suelto, al meter update() dentro del animate(), hace la animación más fluida y sin delay al keyPress
 function update() {
-  const moveStep = 0.15
+  const moveStep = 0.22
   if (isKeyPressed) {
     if (keyboardEvent.keyCode === 38) {
       //No ir más allá del último cartel
-      if (car.scene.position.z < 8.6) {
+      if (car.scene.position.z < 6.2) {
         return
       }
       car.scene.translateZ(moveStep) //Para avanzar hacia donde mira en vez de fijo en un eje
