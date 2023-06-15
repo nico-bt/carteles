@@ -146,21 +146,25 @@ loader.load(
 
 // Carteles
 //------------------------------------------------
-const cartel = await loader.loadAsync("/advertisement_billboard/scene.gltf")
+// Para que no se queje con el "top await" error - inside a funct
+async function loadCarteles() {
+  const cartel = await loader.loadAsync("/advertisement_billboard/scene.gltf")
 
-cartel.scene.position.set(12, -10, 80)
-cartel.scene.scale.set(2, 2, 2)
-scene.add(cartel.scene)
+  cartel.scene.position.set(12, -10, 80)
+  cartel.scene.scale.set(2, 2, 2)
+  scene.add(cartel.scene)
 
-const cartel2 = await loader.loadAsync("/advertisement_billboard/scene.gltf")
-cartel2.scene.scale.set(2, 2, 2)
-cartel2.scene.position.set(12, -10, 38)
-scene.add(cartel2.scene)
+  const cartel2 = await loader.loadAsync("/advertisement_billboard/scene.gltf")
+  cartel2.scene.scale.set(2, 2, 2)
+  cartel2.scene.position.set(12, -10, 38)
+  scene.add(cartel2.scene)
 
-const cartel3 = await loader.loadAsync("/advertisement_billboard/scene.gltf")
-cartel3.scene.scale.set(2.25, 2.25, 2.25)
-cartel3.scene.position.set(12, -11, -2)
-scene.add(cartel3.scene)
+  const cartel3 = await loader.loadAsync("/advertisement_billboard/scene.gltf")
+  cartel3.scene.scale.set(2.25, 2.25, 2.25)
+  cartel3.scene.position.set(12, -11, -2)
+  scene.add(cartel3.scene)
+}
+loadCarteles()
 
 // Imagenes para Carteles
 //------------------------------------------------
@@ -213,15 +217,21 @@ scene.add(meshImg3)
 
 // Car character
 //***********************************************************************
-const car = await loader.loadAsync("/car/scene.gltf")
+let car
+async function loadCar() {
+  const carModel = await loader.loadAsync("/car/scene.gltf")
 
-car.scene.scale.set(0.3, 0.3, 0.3)
-car.scene.position.set(2.5, -0.25, 93.7)
-camera.position.set(-8, 10, -18)
-car.scene.rotation.y = Math.PI
-scene.add(car.scene)
-camera.rotateY(Math.PI)
-car.scene.add(camera) //Asi lo sigue la camara
+  carModel.scene.scale.set(0.3, 0.3, 0.3)
+  carModel.scene.position.set(2.5, -0.25, 93.7)
+  camera.position.set(-8, 10, -18)
+  carModel.scene.rotation.y = Math.PI
+  scene.add(carModel.scene)
+  camera.rotateY(Math.PI)
+  carModel.scene.add(camera) //Asi lo sigue la camara
+
+  car = carModel
+}
+loadCar()
 
 // Moving the character
 // Left: 37, Up: 38, Right: 39, Down: 40, Space: 32, z:90, x:88
