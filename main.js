@@ -61,6 +61,7 @@ const grassTexture = new THREE.TextureLoader().load("grass.jpg")
 grassTexture.generateMipmaps = false
 grassTexture.wrapS = THREE.RepeatWrapping
 grassTexture.wrapT = THREE.RepeatWrapping
+grassTexture.repeat.set(10, 10)
 const floorMaterial = new THREE.MeshStandardMaterial({
   color: 0xfff666,
   map: grassTexture,
@@ -204,6 +205,7 @@ scene.add(meshImg2)
 //--------------------------------------------
 let materialImg3 = new THREE.MeshBasicMaterial({
   map: loaderImg.load("nico.jpg"),
+  color: 0xffffff,
 })
 let geometryImg3 = new THREE.PlaneGeometry(13.6, 6.8)
 
@@ -292,4 +294,33 @@ function onWindowResize() {
   camera.updateProjectionMatrix()
 
   renderer.setSize(window.innerWidth, window.innerHeight)
+}
+
+// Click en cartel
+//***********************************************************************
+// Raycaster y mouse para detectar clics
+const raycaster = new THREE.Raycaster()
+const mouse = new THREE.Vector2()
+
+// URL al hacer clic en la imagen
+const url = "https://www.linkedin.com/in/nico-battaglia/"
+
+// Event listener para detectar clics
+window.addEventListener("click", onClick, false)
+
+function onClick(event) {
+  // Convertir las coordenadas del clic a coordenadas del dispositivo normalizado
+  mouse.x = (event.clientX / window.innerWidth) * 2 - 1
+  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1
+
+  // Actualizar el raycaster con la cámara y las coordenadas del mouse
+  raycaster.setFromCamera(mouse, camera)
+
+  // Calcular los objetos intersectados
+  const intersects = raycaster.intersectObject(meshImg3)
+
+  // Si hay una intersección, abrir la URL en una nueva pestaña
+  if (intersects.length > 0) {
+    window.open(url, "_blank")
+  }
 }
