@@ -321,6 +321,6 @@ function onClick(event) {
 
   // Si hay una intersección, abrir la URL en una nueva pestaña
   if (intersects.length > 0) {
-    window.open(url, "_blank")
+    window.open(url, "_self")
   }
 }

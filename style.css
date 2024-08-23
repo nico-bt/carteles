@@ -21,3 +21,39 @@ body {
   min-width: 320px;
   min-height: 100vh;
 }
+
+.container {
+  /* max-width: 850px; */
+  position: absolute;
+  right: 2%;
+  left: 2%;
+  bottom: 2%;
+  transition: all 0.3s ease-out;
+}
+
+.overlay {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #fafafa;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 12px;
+  border-radius: 10px;
+}
+
+.up-arrow {
+  font-size: 2.75rem;
+}
+
+p {
+  font-variant: small-caps;
+  font-size: 2rem;
+  margin: 0.5rem;
+  letter-spacing: 1px;
+}
+
+.fade-out {
+  opacity: 0;
+  visibility: hidden;
+}

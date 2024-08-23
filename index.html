@@ -12,8 +12,18 @@
   </head>
 
   <body>
-    <div class="container"></div>
+    <div class="container">
+      <div class="overlay">
+        <p>Usá las flechitas para moverte</p>
+        <p class="up-arrow">⬆️ ⬇️</p>
+        <p class="up-arrow">🚘</p>
+      </div>
+    </div>
 
     <script type="module" src="/main.js"></script>
+    <script>
+      const container = document.querySelector(".container")
+      window.addEventListener("keydown", (event) => container.classList.add("fade-out"))
+    </script>
   </body>
 </html>
